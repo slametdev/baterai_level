@@ -4,85 +4,82 @@ import 'package:battery_plus/battery_plus.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
-  //TODO: Implement HomeController
+  final bateraiPercentage = 0.obs;
+  final bateraiImage = "assets/images/battery/battery_level_1.png".obs;
+  final batteryLevel = 0.obs;
+  final bateraiStatus = "".obs;
 
   var battery = Battery();
-  final batteryStatus = "".obs;
-  final percentage = 0.obs;
+
   StreamSubscription<BatteryState>? batteryStateSubscription;
-  var imageBatteryLevel = 1.obs;
 
   Timer? timerCharge;
 
   @override
   void onInit() {
-    setupMonitorBaterailevel();
+    setupMonitorBateraiLevel();
     super.onInit();
   }
 
   @override
-  void onReady() async {
+  void onReady() {
     super.onReady();
   }
 
   @override
   void onClose() {
-    super.onClose();
     batteryStateSubscription?.cancel();
+    timerCharge?.cancel();
+    super.onClose();
   }
 
-  void setupMonitorBaterailevel() {
-    _fetchBatteryLevel();
+  setupMonitorBateraiLevel() {
+    fetchBatteryLevel();
     batteryStateSubscription = battery.onBatteryStateChanged.listen((state) {
       switch (state) {
-        case BatteryState.full:
-          batteryStatus.value = "Fully Charged";
-          _fetchBatteryLevel();
-          break;
         case BatteryState.charging:
-          batteryStatus.value = "Charging";
           chargeIndikator();
           break;
-        case BatteryState.discharging:
-          batteryStatus.value = "Discharging";
-          _fetchBatteryLevel();
-          break;
         default:
-          batteryStatus.value = "Unknown Status";
-          _fetchBatteryLevel();
+          fetchBatteryLevel();
           break;
       }
     });
   }
 
-  void _fetchBatteryLevel() async {
+  fetchBatteryLevel() async {
     timerCharge?.cancel();
-    percentage.value = await battery.batteryLevel;
-    if (percentage.value == 100) {
-      imageBatteryLevel.value = 6;
-    } else if (percentage.value >= 80) {
-      imageBatteryLevel.value = 5;
-    } else if (percentage.value >= 60) {
-      imageBatteryLevel.value = 4;
-    } else if (percentage.value >= 40) {
-      imageBatteryLevel.value = 3;
-    } else if (percentage.value >= 20) {
-      imageBatteryLevel.value = 2;
-    } else if (percentage.value >= 0) {
-      imageBatteryLevel.value = 1;
+    bateraiPercentage.value = await battery.batteryLevel;
+    print(bateraiPercentage.value);
+    if (bateraiPercentage.value == 100) {
+      batteryLevel.value = 6;
+    } else if (bateraiPercentage.value >= 80) {
+      batteryLevel.value = 5;
+    } else if (bateraiPercentage.value >= 60) {
+      batteryLevel.value = 4;
+    } else if (bateraiPercentage.value >= 40) {
+      batteryLevel.value = 3;
+    } else if (bateraiPercentage.value >= 20) {
+      batteryLevel.value = 2;
+    } else if (bateraiPercentage.value >= 0) {
+      batteryLevel.value = 1;
     }
+    bateraiImage.value =
+        "assets/images/battery/battery_level_${batteryLevel.value}.png";
   }
 
-  void chargeIndikator() {
+  chargeIndikator() {
     if (timerCharge != null && timerCharge!.isActive) {
       return;
     }
-    timerCharge = Timer.periodic(const Duration(milliseconds: 500), (timer) {
-      if (imageBatteryLevel.value + 1 > 6) {
-        imageBatteryLevel.value = 1;
+    timerCharge = Timer.periodic(Duration(seconds: 1), (timer) async {
+      if (batteryLevel.value + 1 > 6) {
+        batteryLevel.value = 1;
       } else {
-        imageBatteryLevel.value++;
+        batteryLevel.value++;
       }
+      bateraiImage.value =
+          "assets/images/battery/battery_level_${batteryLevel.value}.png";
     });
   }
 }

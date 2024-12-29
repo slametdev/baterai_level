@@ -1,6 +1,6 @@
 {
-    "name": "baterailevel",
-    "short_name": "baterailevel",
+    "name": "baterai_level",
+    "short_name": "baterai_level",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

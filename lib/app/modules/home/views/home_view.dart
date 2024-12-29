@@ -8,25 +8,23 @@ class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
   @override
   Widget build(BuildContext context) {
-    HomeController controller = Get.find();
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Center(
-          child: Column(
+      appBar: AppBar(
+        title: const Text('Baterai Level'),
+        centerTitle: true,
+      ),
+      body: Center(
+        child: Obx(
+          () => Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Obx(
-                () => Image.asset(
-                  "assets/images/battery/battery_level_${controller.imageBatteryLevel.value}.png",
-                  scale: 2,
-                ),
+              Image.asset(
+                controller.bateraiImage.value,
+                scale: 2,
               ),
-              Obx(
-                () => Text(
-                  "${controller.percentage.value.toString()}%",
-                  style: TextStyle(fontSize: 20),
-                ),
+              Text(
+                '${controller.bateraiPercentage.value}%',
+                style: TextStyle(fontSize: 20),
               ),
             ],
           ),

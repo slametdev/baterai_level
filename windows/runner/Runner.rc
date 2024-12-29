@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.slametdev.baterailevel" "\0"
-            VALUE "FileDescription", "baterailevel" "\0"
+            VALUE "CompanyName", "com.slametdev.bateraiLevel" "\0"
+            VALUE "FileDescription", "baterai_level" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "baterailevel" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2024 com.slametdev.baterailevel. All rights reserved." "\0"
-            VALUE "OriginalFilename", "baterailevel.exe" "\0"
-            VALUE "ProductName", "baterailevel" "\0"
+            VALUE "InternalName", "baterai_level" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2024 com.slametdev.bateraiLevel. All rights reserved." "\0"
+            VALUE "OriginalFilename", "baterai_level.exe" "\0"
+            VALUE "ProductName", "baterai_level" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
